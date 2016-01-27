@@ -13,12 +13,7 @@ public class Main {
 
   public static void main(String[] args) {
     Observable.just("123")
-        .map(new Func1<String, Integer>() {
-          @Override
-          public Integer call(String s) {
-            return Integer.parseInt(s)+1;
-          }
-        })
+        .map(s -> Integer.parseInt(s)+1)
         .subscribe(i -> System.out.println("subscriber = "+i));
   }
 
