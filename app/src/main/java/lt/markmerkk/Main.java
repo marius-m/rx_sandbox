@@ -12,9 +12,14 @@ public class Main {
 
 
   public static void main(String[] args) {
-    Observable.just("observable")
-        .map(s -> s+s)
-        .subscribe(s -> System.out.println("subscriber = "+s));
+    Observable.just("123")
+        .map(new Func1<String, Integer>() {
+          @Override
+          public Integer call(String s) {
+            return Integer.parseInt(s)+1;
+          }
+        })
+        .subscribe(i -> System.out.println("subscriber = "+i));
   }
 
 }
