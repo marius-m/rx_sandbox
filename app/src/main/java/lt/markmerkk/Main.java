@@ -13,12 +13,7 @@ public class Main {
 
   public static void main(String[] args) {
     Observable.just("observable")
-        .map(new Func1<String, String>() {
-          @Override
-          public String call(String s) {
-            return s+s;
-          }
-        })
+        .map(s -> s+s)
         .subscribe(s -> System.out.println("subscriber = "+s));
   }
 
