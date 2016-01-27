@@ -11,18 +11,16 @@ public class Main {
 
 
   public static void main(String[] args) {
-    myObservable.subscribe(myAction);
+//    Observable.just("Something").subscribe(new Action1<String>() {
+//      @Override
+//      public void call(String s) {
+//        System.out.println("Somehing +" + s);
+//      }
+//    });
+    Observable.just("Something").subscribe(s -> {
+      System.out.println("Something +"+s);
+    });
   }
-
-  static Observable<String> myObservable = Observable.just("Something");
-
-  static Action1<String> myAction = new Action1<String>() {
-
-    @Override
-    public void call(String s) {
-      System.out.println("Some action "+s);
-    }
-  };
 
 }
 
