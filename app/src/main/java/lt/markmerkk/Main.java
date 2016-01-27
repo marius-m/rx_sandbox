@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Func1;
 
 /**
  * Created by mariusmerkevicius on 1/27/16.
@@ -35,11 +36,22 @@ public class Main {
 //        .subscribe(url -> {
 //          System.out.println("Output:" + url);
 //        });
-    query("Hello")
-        .subscribe(urls -> {
-          Observable.from(urls)
-              .subscribe(url -> System.out.println(url));
-        });
+//    query("Hello")
+//        .subscribe(urls -> {
+//          Observable.from(urls)
+//              .subscribe(url -> System.out.println(url));
+//        });
+//    query("Hello, world!")
+//        .flatMap(new Func1<List<String>, Observable<String>>() {
+//          @Override
+//          public Observable<String> call(List<String> urls) {
+//            return Observable.from(urls);
+//          }
+//        })
+//        .subscribe(url -> System.out.println(url));
+    query("Hello, world!")
+        .flatMap(urls -> Observable.from(urls))
+        .subscribe(url -> System.out.println(url));
   }
 
 }
