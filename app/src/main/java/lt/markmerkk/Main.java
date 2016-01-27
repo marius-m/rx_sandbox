@@ -52,15 +52,26 @@ public class Main {
 //    query("Hello, world!")
 //        .flatMap(urls -> Observable.from(urls))
 //        .subscribe(url -> System.out.println(url));
+//    query("Hello, world!")
+//        .flatMap(urls -> Observable.from(urls))
+//        .flatMap(new Func1<String, Observable<String>>() {
+//          @Override
+//          public Observable<String> call(String url) {
+//            return getTitle(url);
+//          }
+//        })
+//        .subscribe(title -> System.out.println(title));
     query("Hello, world!")
         .flatMap(urls -> Observable.from(urls))
-        .flatMap(new Func1<String, Observable<String>>() {
-          @Override
-          public Observable<String> call(String url) {
-            return Observable.just(("two".equals(url) ? url : null));
-          }
-        })
+        .flatMap(url -> getTitle(url))
+        .filter(title -> title != null)
+        .take(5)
+        .doOnNext(title -> System.out.println("Doing something more with a "+title))
         .subscribe(title -> System.out.println(title));
+  }
+
+  private static Observable<String> getTitle(String url) {
+    return Observable.just(("two".equals(url) ? url : null));
   }
 
 }
