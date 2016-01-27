@@ -61,13 +61,39 @@ public class Main {
 //          }
 //        })
 //        .subscribe(title -> System.out.println(title));
+//    query("Hello, world!")
+//        .flatMap(urls -> Observable.from(urls))
+//        .flatMap(url -> getTitle(url))
+//        .filter(title -> title != null)
+//        .take(5)
+//        .doOnNext(title -> System.out.println("Doing something more with a "+title))
+//        .subscribe(title -> System.out.println(title));
     query("Hello, world!")
         .flatMap(urls -> Observable.from(urls))
-        .flatMap(url -> getTitle(url))
-        .filter(title -> title != null)
-        .take(5)
-        .doOnNext(title -> System.out.println("Doing something more with a "+title))
-        .subscribe(title -> System.out.println(title));
+        .map(new Func1<String, String>() {
+          @Override
+          public String call(String s) {
+            if ("two".equals(s))
+              throw new IllegalArgumentException("s is two!");
+            return s;
+          }
+        })
+        .subscribe(new Subscriber<String>() {
+          @Override
+          public void onCompleted() {
+            System.out.println("Complete");
+          }
+
+          @Override
+          public void onError(Throwable e) {
+            System.out.println("Some error: "+e.getMessage());
+          }
+
+          @Override
+          public void onNext(String s) {
+            System.out.println("Output: "+s);
+          }
+        });
   }
 
   private static Observable<String> getTitle(String url) {
