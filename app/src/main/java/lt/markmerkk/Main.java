@@ -31,9 +31,14 @@ public class Main {
 //          for (String url : urls)
 //            System.out.println(url);
 //        });
-    Observable.from(new String[]{"url1", "url2", "url3"})
-        .subscribe(url -> {
-          System.out.println("Output:" + url);
+//    Observable.from(new String[]{"url1", "url2", "url3"})
+//        .subscribe(url -> {
+//          System.out.println("Output:" + url);
+//        });
+    query("Hello")
+        .subscribe(urls -> {
+          Observable.from(urls)
+              .subscribe(url -> System.out.println(url));
         });
   }
 
