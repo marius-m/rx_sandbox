@@ -1,0 +1,22 @@
+allprojects { }
+
+subprojects {
+  apply plugin: 'java'
+//  sourceCompatibility = 1.8
+//  targetCompatibility = 1.8
+
+//  repositories {
+//    mavenLocal()
+//
+//    maven { url "https://maven.atlassian.com/content/repositories/atlassian-public" }
+//    maven { url "http://repo.maven.apache.org/maven2" }
+//    maven { url "http://gradle.artifactoryonline.com/gradle/libs/" }
+//    maven { url "http://maven.wso2.org/nexus/content/groups/wso2-public/" }
+//
+//  }
+
+//  configurations.all {}
+//  dependencies {
+//    compile group: 'com.google.guava', name: 'guava', version: '10.0.1'
+//  }
+}
