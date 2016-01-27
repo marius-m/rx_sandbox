@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by mariusmerkevicius on 1/27/16.
@@ -28,10 +26,14 @@ public class Main {
   }
 
   public static void main(String[] args) {
-    query("Hello, world!")
-        .subscribe(urls -> {
-          for (String url : urls)
-            System.out.println(url);
+//    query("Hello, world!")
+//        .subscribe(urls -> {
+//          for (String url : urls)
+//            System.out.println(url);
+//        });
+    Observable.from(new String[]{"url1", "url2", "url3"})
+        .subscribe(url -> {
+          System.out.println("Output:" + url);
         });
   }
 
