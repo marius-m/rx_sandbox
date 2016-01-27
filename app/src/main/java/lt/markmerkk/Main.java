@@ -49,9 +49,18 @@ public class Main {
 //          }
 //        })
 //        .subscribe(url -> System.out.println(url));
+//    query("Hello, world!")
+//        .flatMap(urls -> Observable.from(urls))
+//        .subscribe(url -> System.out.println(url));
     query("Hello, world!")
         .flatMap(urls -> Observable.from(urls))
-        .subscribe(url -> System.out.println(url));
+        .flatMap(new Func1<String, Observable<String>>() {
+          @Override
+          public Observable<String> call(String url) {
+            return Observable.just(("two".equals(url) ? url : null));
+          }
+        })
+        .subscribe(title -> System.out.println(title));
   }
 
 }
