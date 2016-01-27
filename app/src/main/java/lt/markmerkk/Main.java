@@ -1,7 +1,6 @@
 package lt.markmerkk;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Action1;
 
 /**
@@ -12,28 +11,17 @@ public class Main {
 
 
   public static void main(String[] args) {
-    myObservable.subscribe(mySubscriber);
+    myObservable.subscribe(myAction);
   }
 
-  static Observable<String> myObservable = Observable.create(
-      new Observable.OnSubscribe<String>() {
-        @Override
-        public void call(Subscriber<? super String> sub) {
-          sub.onNext("Hello, world!");
-          sub.onCompleted();
-        }
-      }
-  );
+  static Observable<String> myObservable = Observable.just("Something");
 
-  static Subscriber<String> mySubscriber = new Subscriber<String>() {
-    @Override
-    public void onNext(String s) { System.out.println(s); }
+  static Action1<String> myAction = new Action1<String>() {
 
     @Override
-    public void onCompleted() { }
-
-    @Override
-    public void onError(Throwable e) { }
+    public void call(String s) {
+      System.out.println("Some action "+s);
+    }
   };
 
 }
