@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action1;
 
 /**
  * Created by mariusmerkevicius on 1/28/16.
@@ -38,5 +39,24 @@ public class BasicTest {
       public void onError(Throwable e) { }
     };
     myObservable.subscribe(mySubscriber);
+  }
+
+//  INFO | 2016-01-28 23:06:07,366 | BasicTest.java | 51 | Hello world!
+  @Test
+  public void basic_basicObservableWrap1_shouldExecute() throws Exception {
+    Observable<String> myObservable = Observable.just("Hello world!");
+    myObservable.subscribe(new Action1<String>() {
+      @Override
+      public void call(String s) {
+        logger.info(s);
+      }
+    });
+  }
+
+//  INFO | 2016-01-28 23:07:14,178 | BasicTest.java | 60 | Hello world!
+  @Test
+  public void basic_basicObservableLambda_shouldExecute() throws Exception {
+    Observable<String> myObservable = Observable.just("Hello world!");
+    myObservable.subscribe(s -> logger.info(s));
   }
 }
