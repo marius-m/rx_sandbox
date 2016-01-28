@@ -2,29 +2,34 @@ package lt.markmerkk;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by mariusmerkevicius on 1/27/16.
  */
 public class Main {
 
-  // Returns a List of website URLs based on a text search
-  static Observable<List<String>> query(String text) {
-    return Observable.create(new Observable.OnSubscribe<List<String>>() {
-      @Override
-      public void call(Subscriber<? super List<String>> subscriber) {
-        subscriber.onNext(new ArrayList<String>(){{
-          add("one");
-          add("two");
-          add("three");
-        }});
-        subscriber.onCompleted();
-      }
-    });
-  }
+//  // Returns a List of website URLs based on a text search
+//  static Observable<List<String>> query(String text) {
+//    return Observable.create(new Observable.OnSubscribe<List<String>>() {
+//      @Override
+//      public void call(Subscriber<? super List<String>> subscriber) {
+//        subscriber.onNext(new ArrayList<String>(){{
+//          add("one");
+//          add("two");
+//          add("three");
+//        }});
+//        subscriber.onCompleted();
+//      }
+//    });
+//  }
 
   public static void main(String[] args) {
 //    query("Hello, world!")
@@ -68,37 +73,41 @@ public class Main {
 //        .take(5)
 //        .doOnNext(title -> System.out.println("Doing something more with a "+title))
 //        .subscribe(title -> System.out.println(title));
-    query("Hello, world!")
-        .flatMap(urls -> Observable.from(urls))
-        .map(new Func1<String, String>() {
-          @Override
-          public String call(String s) {
-            if ("two".equals(s))
-              throw new IllegalArgumentException("s is two!");
-            return s;
-          }
-        })
-        .subscribe(new Subscriber<String>() {
-          @Override
-          public void onCompleted() {
-            System.out.println("Complete");
-          }
+//    query("Hello, world!")
+//        .flatMap(urls -> Observable.from(urls))
+//        .map(new Func1<String, String>() {
+//          @Override
+//          public String call(String s) {
+//            if ("two".equals(s))
+//              throw new IllegalArgumentException("s is two!");
+//            return s;
+//          }
+//        })
+//        .subscribe(new Subscriber<String>() {
+//          @Override
+//          public void onCompleted() {
+//            System.out.println("Complete");
+//          }
+//
+//          @Override
+//          public void onError(Throwable e) {
+//            System.out.println("Some error: "+e.getMessage());
+//          }
+//
+//          @Override
+//          public void onNext(String s) {
+//            System.out.println("Output: "+s);
+//          }
+//        });
 
-          @Override
-          public void onError(Throwable e) {
-            System.out.println("Some error: "+e.getMessage());
-          }
+    // Cold observable
 
-          @Override
-          public void onNext(String s) {
-            System.out.println("Output: "+s);
-          }
-        });
   }
 
-  private static Observable<String> getTitle(String url) {
-    return Observable.just(("two".equals(url) ? url : null));
-  }
+
+//  private static Observable<String> getTitle(String url) {
+//    return Observable.just(("two".equals(url) ? url : null));
+//  }
 
 }
 
