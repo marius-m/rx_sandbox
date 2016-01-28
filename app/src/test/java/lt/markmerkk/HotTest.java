@@ -11,6 +11,7 @@ import rx.subjects.PublishSubject;
 
 /**
  * Created by mariusmerkevicius on 1/28/16.
+ * Source: http://www.javacodegeeks.com/2015/03/hot-and-cold-rx-java-observable.html
  */
 public class HotTest {
 

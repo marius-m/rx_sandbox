@@ -9,6 +9,7 @@ import rx.functions.Func1;
 
 /**
  * Created by mariusmerkevicius on 1/28/16.
+ * Source: http://blog.danlew.net/2014/09/30/grokking-rxjava-part-3/
  */
 public class Adv2Test {
   private static final Logger logger = LoggerFactory.getLogger(Main.class);
