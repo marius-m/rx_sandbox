@@ -1,6 +1,7 @@
 package lt.markmerkk;
 
 import java.util.concurrent.CountDownLatch;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,13 @@ public class ColdTest {
 
   private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-  @Test
+  @Before
+  public void setUp() {
+  }
+
+//  INFO | 2016-01-28 22:19:34,362 | ColdTest.java | 91 | Start: Executing slow task in Service 1
+//  INFO | 2016-01-28 22:19:35,364 | ColdTest.java | 43 | From Subscriber 1: data 1
+//  INFO | 2016-01-28 22:19:35,365 | ColdTest.java | 96 | End: Executing slow task in Service 1  @Test
   public void cold_runColdOperation_shouldRunOnSubscribers() throws Exception {
     // Arrange
     Observable<String> op1 = operation();
@@ -44,6 +51,15 @@ public class ColdTest {
     // Assert
   }
 
+//  INFO | 2016-01-28 22:19:33,347 | ColdTest.java | 91 | Start: Executing slow task in Service 1
+//  INFO | 2016-01-28 22:19:33,349 | ColdTest.java | 91 | Start: Executing slow task in Service 1
+//  INFO | 2016-01-28 22:19:33,351 | ColdTest.java | 91 | Start: Executing slow task in Service 1
+//  INFO | 2016-01-28 22:19:34,357 | ColdTest.java | 80 | From Subscriber 3: data 1
+//  INFO | 2016-01-28 22:19:34,358 | ColdTest.java | 96 | End: Executing slow task in Service 1
+//  INFO | 2016-01-28 22:19:34,357 | ColdTest.java | 72 | From Subscriber 1: data 1
+//  INFO | 2016-01-28 22:19:34,359 | ColdTest.java | 96 | End: Executing slow task in Service 1
+//  INFO | 2016-01-28 22:19:34,357 | ColdTest.java | 76 | From Subscriber 2: data 1
+//  INFO | 2016-01-28 22:19:34,359 | ColdTest.java | 96 | End: Executing slow task in Service 1
   @Test
   public void cold_runMultipleColdOperations_shouldRunOnSubscribers() throws Exception {
     // Arrange
