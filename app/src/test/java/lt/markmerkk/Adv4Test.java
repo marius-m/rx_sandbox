@@ -2,6 +2,7 @@ package lt.markmerkk;
 
 import java.util.Random;
 import org.junit.Test;
+import rx.Completable;
 import rx.Observable;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -39,6 +40,20 @@ public class Adv4Test {
 
     // Assert
     Observable.merge(run1, run2).toBlocking().subscribe();
+  }
+
+  @Test
+  public void test_inputCompletable1_shouldExec() throws Exception {
+    // Arrange
+
+    // Act
+    Completable completable1 = Completable.fromAction(new Job()::execute)
+        .subscribeOn(Schedulers.io());
+    Completable completable2 = Completable.fromAction(new Job()::execute)
+        .subscribeOn(Schedulers.io());
+
+    // Assert
+    Completable.merge(completable1, completable2).await();
   }
 
   //region Convenience
