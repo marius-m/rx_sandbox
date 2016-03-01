@@ -3,6 +3,7 @@ package lt.markmerkk;
 import java.util.Random;
 import org.junit.Test;
 import rx.Observable;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
@@ -10,16 +11,41 @@ import rx.schedulers.Schedulers;
  */
 public class Adv4Test {
   @Test
-  public void test_inputValid_shouldExec() throws Exception {
+  public void test_inputZip_shouldExec() throws Exception {
     // Arrange
 
     // Act
-    rxJobExecute(new Job()).subscribeOn(Schedulers.io()).subscribe();
-    rxJobExecute(new Job()).subscribeOn(Schedulers.io()).subscribe();
-    Thread.sleep(6000);
+    Observable run1 = rxJobExecute(new Job()).subscribeOn(Schedulers.io());
+    Observable run2 = rxJobExecute(new Job()).subscribeOn(Schedulers.io());
+    //Thread.sleep(6000);
 
     // Assert
+    Observable.zip(run1, run2, new Func2() {
+      @Override
+      public Object call(Object o, Object o2) {
+        return null;
+      }
+    }).toBlocking().single();
+  }
 
+  @Test
+  public void test_inputMerge_shouldExec() throws Exception {
+    // Arrange
+
+    // Act
+    Observable run1 = rxJobExecute2(new Job()).subscribeOn(Schedulers.io());
+    Observable run2 = rxJobExecute2(new Job()).subscribeOn(Schedulers.io());
+    //Thread.sleep(6000);
+
+    // Assert
+    Observable.merge(run1, run2).toBlocking().subscribe();
+  }
+
+  //region Convenience
+
+  private Observable<Object> rxJobExecute2(Job job) {
+    return Observable.empty()
+        .doOnCompleted(job::execute);
   }
 
   private Observable<Void> rxJobExecute(Job job) {
@@ -28,6 +54,10 @@ public class Adv4Test {
       return null;
     });
   }
+
+  //endregion
+
+  //region Classes
 
   private class Job {
     void execute() {
@@ -40,5 +70,7 @@ public class Adv4Test {
       System.out.println("End");
     }
   }
+
+  //endregion
 
 }
