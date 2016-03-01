@@ -1,6 +1,8 @@
 package lt.markmerkk;
 
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import org.junit.Test;
 import rx.Completable;
 import rx.Observable;
@@ -54,6 +56,24 @@ public class Adv4Test {
 
     // Assert
     Completable.merge(completable1, completable2).await();
+  }
+
+  @Test
+  public void test_inputCompletableFuture_shouldExec() throws Exception {
+    // Arrange
+
+    // Act
+    // Assert
+    try {
+      CompletableFuture<Void> run1 = CompletableFuture.runAsync(new Job()::execute);
+      CompletableFuture<Void> run2 = CompletableFuture.runAsync(new Job()::execute);
+
+      CompletableFuture.allOf(run1, run2)
+          .get();
+
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException("Jobs execution failed", e);
+    }
   }
 
   //region Convenience
